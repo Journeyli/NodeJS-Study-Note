@@ -1,0 +1,129 @@
+﻿<%- include('../header') %>
+        </br></br>
+    <div class="title">
+    <H1>—李の勉強NOTE</H1>
+    </div>
+    <div class="main">
+    <H2>3.4 Express 浅析</H2>
+    </div>
+    <div class="to">
+    </br>
+    </div>
+    <div class="text_eg">
+  <div class="four wide column"></div>
+  <div class="eight wide column">
+<p>前面我们讲解了 express 中路由和模板引擎 ejs 的用法，但 express 的精髓并不在此，在于中间件的设计理念。</p>
+
+<h2><a id="user-content-341-中间件与-next" class="anchor" href="#341-中间件与-next" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.4.1 中间件与 next</h2>
+
+<p>express 中的中间件（middleware）就是用来处理请求的，当一个中间件处理完，可以通过调用 <div class="code">next()</div> 传递给下一个中间件，如果没有调用 <div class="code">next()</div>，则请求不会往下传递，如内置的 <div class="code">res.render</div> 其实就是渲染完 html 直接返回给客户端，没有调用 <div class="code">next()</div>，从而没有传递给下一个中间件。看个小例子，修改 index.js 如下：</p>
+
+<p><strong>index.js</strong></p>
+
+<div class="code">var express = require('express');<br />
+var app = express();<br />
+<br />
+app.use(function(req, res, next) {<br />
+  console.log('1');<br />
+  next();<br />
+});<br />
+<br />
+app.use(function(req, res, next) {<br />
+  console.log('2');<br />
+  res.status(200).end();<br />
+});<br />
+<br />
+app.listen(3000);
+</div>
+
+<p>此时访问 <div class="code">localhost:3000</div>，终端会输出：</p>
+
+<div class="code">1<br />
+2
+</div>
+
+<p>通过 <div class="code">app.use</div> 加载中间件，在中间件中通过 next 将请求传递到下一个中间件，next 可接受一个参数接收错误信息，如果使用了 <div class="code">next(error)</div>，则会返回错误而不会传递到下一个中间件，修改 index.js 如下：</p>
+
+<p><strong>index.js</strong></p>
+
+<div class="code">var express = require('express');<br />
+var app = express();<br />
+<br />
+app.use(function(req, res, next) {<br />
+  console.log('1');<br />
+  next(new Error('haha'));<br />
+});<br />
+<br />
+app.use(function(req, res, next) {<br />
+  console.log('2');<br />
+  res.status(200).end();<br />
+});<br />
+<br />
+app.listen(3000);
+</div>
+
+<p>此时访问 <div class="code">localhost:3000</div>，终端会输出错误信息：</p>
+
+<p><a href="/img/book/3.4.1.png" target="_blank"><img src="/img/book/3.4.1.png" alt="" style="max-width:100%;"></a></p>
+
+<p>浏览器会显示：</p>
+
+<p><a href="/img/book/3.4.2.png" target="_blank"><img src="/img/book/3.4.2.png" alt="" style="max-width:100%;"></a></p>
+
+<blockquote>
+<p>小提示：<div class="code">app.use</div> 有非常灵活的使用方式，详情见 <a href="http://expressjs.com/en/4x/api.html#app.use">官方文档</a>。</p>
+</blockquote>
+
+<p>express 有成百上千的第三方中间件，在开发过程中我们首先应该去 npm 上寻找是否有类似实现的中间件，尽量避免造轮子，节省开发时间。下面给出几个常用的搜索 npm 模块的网站：</p>
+
+<ol>
+<li><a href="http://npmjs.com">http://npmjs.com</a>(npm 官网)</li>
+<li><a href="http://node-modules.com">http://node-modules.com</a></li>
+<li><a href="https://npms.io">https://npms.io</a></li>
+<li><a href="https://nodejsmodules.org">https://nodejsmodules.org</a></li>
+</ol>
+
+<blockquote>
+<p>小提示：express@4 之前的版本基于 connect 这个模块实现的中间件的架构，express@4 及以上的版本则移除了对 connect 的依赖自己实现了，理论上基于 connect 的中间件（通常以 <div class="code">connect-</div> 开头，如 <div class="code">connect-mongo</div>）仍可结合 express 使用。</p>
+
+<p>注意：中间件的加载顺序很重要！比如：通常把日志中间件放到比较靠前的位置，后面将会介绍的 <div class="code">connect-flash</div> 中间件是基于 session 的，所以需要在 <div class="code">express-session</div> 后加载。</p>
+</blockquote>
+
+<h2><a id="user-content-342-错误处理" class="anchor" href="#342-错误处理" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.4.2 错误处理</h2>
+
+<p>上面的例子中，应用程序为我们自动返回了错误栈信息（express 内置了一个默认的错误处理器），假如我们想手动控制返回的错误内容，则需要加载一个自定义错误处理的中间件，修改 index.js 如下：</p>
+
+<p><strong>index.js</strong></p>
+
+<div class="code">var express = require('express');<br />
+var app = express();<br />
+<br />
+app.use(function(req, res, next) {<br />
+  console.log('1');<br />
+  next(new Error('haha'));<br />
+});<br />
+<br />
+app.use(function(req, res, next) {<br />
+  console.log('2');<br />
+  res.status(200).end();<br />
+});<br />
+<br />
+//错误处理<br />
+app.use(function(err, req, res, next) {<br />
+  console.error(err.stack);<br />
+  res.status(500).send('Something broke!');<br />
+});<br />
+<br />
+app.listen(3000);
+</div>
+
+<p>此时访问 <div class="code">localhost:3000</div>，浏览器会显示 <div class="code">Something broke!</div>。</p>
+
+<blockquote>
+<p>小提示：关于 express 的错误处理，详情见 <a href="http://expressjs.com/en/guide/error-handling.html">官方文档</a>。</p>
+</blockquote>
+<br />
+<p>上一节：<a href="./33">3.3 模板引擎</a></p>
+
+<p>下一节：<a href="./41">4.1 开发环境</a></p>
+<%- include('../footer') %>

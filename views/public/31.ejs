@@ -1,0 +1,60 @@
+﻿<%- include('../header') %>
+        </br></br>
+    <div class="title">
+    <H1>—李の勉強NOTE</H1>
+    </div>
+    <div class="main">
+    <H2>3.1 初始化一个 Express 项目</H2>
+    </div>
+    <div class="to">
+    </br>
+    </div>
+    <div class="text_eg">
+  <div class="four wide column"></div>
+  <div class="eight wide column">
+<p>首先，我们新建一个目录 myblog，在该目录下运行 <div class="code">npm init</div> 生成一个 package.json，如下所示：</p>
+
+<p><a href="/img/book/3.1.1.png" target="_blank"><img src="/img/book/3.1.1.png" alt="" style="max-width:100%;"></a></p>
+
+<blockquote>
+<p>注意：括号里的是默认值，如果使用默认值则直接回车即可，否则输入自定义内容后回车。</p>
+</blockquote>
+
+<p>然后安装 express 并写入 package.json：</p>
+
+<div class="code">npm i express@4.14.0 --save 
+</div>
+
+<p>新建 index.js，添加如下代码：</p>
+
+<div class="code">var express = require('express');
+var app = express();
+
+app.get('/', function(req, res) {
+  res.send('hello, express');
+});
+
+app.listen(3000);
+</div>
+
+<p>以上代码的意思是：生成一个 express 实例 app，挂载了一个根路由控制器，然后监听 3000 端口并启动程序。运行 <div class="code">node index</div>，打开浏览器访问 <div class="code">localhost:3000</div> 时，页面应显示 hello, express。</p>
+
+<p>这是最简单的一个使用 express 的例子，后面会介绍路由及模板的使用。</p>
+
+<h2><a id="user-content-311-supervisor" class="anchor" href="#311-supervisor" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.1.1 supervisor</h2>
+
+<p>在开发过程中，每次修改代码保存后，我们都需要手动重启程序，才能查看改动的效果。使用 <a href="https://www.npmjs.com/package/supervisor">supervisor</a> 可以解决这个繁琐的问题，全局安装 supervisor：</p>
+
+<div class="code">npm install -g supervisor
+</div>
+
+<p>运行 <div class="code">supervisor --harmony index</div> 启动程序，如下所示：</p>
+
+<p><a href="/img/book/3.1.2.png" target="_blank"><img src="/img/book/3.1.2.png" alt="" style="max-width:100%;"></a></p>
+
+<p>supervisor 会监听当前目录下 node 和 js 后缀的文件，当这些文件发生改动时，supervisor 会自动重启程序。</p>
+
+<p>上一节：<a href="./26">2.6 npm 使用注意事项</a></p>
+
+<p>下一节：<a href="./32">3.2 路由</a></p>
+<%- include('../footer') %>

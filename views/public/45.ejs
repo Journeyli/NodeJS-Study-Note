@@ -1,0 +1,297 @@
+﻿<%- include('../header') %>
+        </br></br>
+    <div class="title">
+    <H1>—李の勉強NOTE</H1>
+    </div>
+    <div class="main">
+    <H2>4.5 页面设计</H2>
+    </div>
+    <div class="to">
+    </br>
+    </div>
+    <div class="text_eg">
+  <div class="four wide column"></div>
+  <div class="eight wide column">
+<p>我们使用 jQuery + Semantic-UI 实现前端页面的设计，最终效果图如下:</p>
+
+<p><strong>注册页</strong></p>
+
+<p><a href="/img/book/4.5.1.png" target="_blank"><img src="/img/book/4.5.1.png" alt="" style="max-width:100%;"></a></p>
+
+<p><strong>登录页</strong></p>
+
+<p><a href="/img/book/4.5.2.png" target="_blank"><img src="/img/book/4.5.2.png" alt="" style="max-width:100%;"></a></p>
+
+<p><strong>主页（或用户页）</strong></p>
+
+<p><a href="/img/book/4.5.3.png" target="_blank"><img src="/img/book/4.5.3.png" alt="" style="max-width:100%;"></a></p>
+
+<p><strong>内容页</strong></p>
+
+<p><a href="/img/book/4.5.5.png" target="_blank"><img src="/img/book/4.5.5.png" alt="" style="max-width:100%;"></a></p>
+
+<p><strong>登录错误通知</strong></p>
+
+<p><a href="/img/book/4.5.11.png" target="_blank"><img src="/img/book/4.5.11.png" alt="" style="max-width:100%;"></a></p>
+
+<h2><a id="user-content-451-组件" class="anchor" href="#451-组件" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.5.1 组件</h2>
+
+<p>前面提到过，我们可以将模板拆分成一些组件，然后使用 ejs 的 include 方法将组件组合起来进行渲染。我们将页面切分成以下组件：</p>
+
+<p><strong>主页</strong></p>
+
+<p><a href="/img/book/4.5.12.png" target="_blank"><img src="/img/book/4.5.12.png" alt="" style="max-width:100%;"></a></p>
+
+<p><strong>内容页</strong></p>
+
+<p><a href="/img/book/4.5.13.png" target="_blank"><img src="/img/book/4.5.13.png" alt="" style="max-width:100%;"></a></p>
+
+<p>根据上面的组件切分图，我们创建以下样式及模板文件：</p>
+
+<p><strong>public/css/style.css</strong></p>
+
+<div class="code">/* ---------- 全局样式 ---------- */
+
+body {
+  width: 1100px;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+
+a:hover {
+  border-bottom: 3px solid #4fc08d;
+}
+
+.button {
+  background-color: #4fc08d !important;
+  color: #fff !important;
+}
+
+.avatar {
+  border-radius: 3px;
+  width: 48px;
+  height: 48px;
+  float: right;
+}
+
+/* ---------- nav ---------- */
+
+.nav {
+  margin-bottom: 20px;
+  color: #999;
+  text-align: center;
+}
+
+.nav h1 {
+  color: #4fc08d;
+  display: inline-block;
+  margin: 10px 0;
+}
+
+/* ---------- nav-setting ---------- */
+
+.nav-setting {
+  position: fixed;
+  right: 30px;
+  top: 35px;
+  z-index: 999;
+}
+
+.nav-setting .ui.dropdown.button {
+  padding: 10px 10px 0 10px;
+  background-color: #fff !important;
+}
+
+.nav-setting .icon.bars {
+  color: #000;
+  font-size: 18px;
+}
+
+/* ---------- post-content ---------- */
+
+.post-content h3 a {
+  color: #4fc08d !important;
+}
+
+.post-content .tag {
+  font-size: 13px;
+  margin-right: 5px;
+  color: #999;
+}
+
+.post-content .tag.right {
+  float: right;
+  margin-right: 0;
+}
+
+.post-content .tag.right a {
+  color: #999;
+}
+</div>
+
+<p><strong>views/header.ejs</strong></p>
+
+<div class="code">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;&lt;%= blog.title %&gt;&lt;/title&gt;
+    &lt;link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css"&gt;
+    &lt;link rel="stylesheet" href="/css/style.css"&gt;
+    &lt;script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script src="//cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;%- include('components/nav') %&gt;
+  &lt;%- include('components/nav-setting') %&gt;
+  &lt;%- include('components/notification') %&gt;
+</div>
+
+<p><strong>views/footer.ejs</strong></p>
+
+<div class="code">  &lt;script type="text/javascript"&gt;
+    // 点击按钮弹出下拉框
+    $('.ui.dropdown').dropdown();
+    // 鼠标悬浮在头像上，弹出气泡提示框
+    $('.post-content .avatar').popup({
+      inline: true,
+      position: 'bottom right',
+      lastResort: 'bottom right',
+    });
+  &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</div>
+
+<blockquote>
+<p>注意：上面 <div class="code">&lt;script&gt;&lt;/script&gt;</div> 是 semantic-ui 操控页面控件的代码，一定要放到 footer.ejs 的 <div class="code">&lt;/body&gt;</div> 的前面，因为只有页面加载完后才能通过 JQuery 获取 DOM 元素。</p>
+</blockquote>
+
+<p>在 views 目录下新建 components 目录用来存放组件，在该目录下创建以下文件：</p>
+
+<p><strong>views/components/nav.ejs</strong></p>
+
+<div class="code">&lt;div class="nav"&gt;
+  &lt;div class="ui grid"&gt;
+    &lt;div class="four wide column"&gt;&lt;/div&gt;
+
+    &lt;div class="eight wide column"&gt;
+      &lt;a href="/posts"&gt;&lt;h1&gt;&lt;%= blog.title %&gt;&lt;/h1&gt;&lt;/a&gt;
+      &lt;p&gt;&lt;%= blog.description %&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</div>
+
+<p><strong>views/components/nav-setting.ejs</strong></p>
+
+<div class="code">&lt;div class="nav-setting"&gt;
+  &lt;div class="ui buttons"&gt;
+    &lt;div class="ui floating dropdown button"&gt;
+      &lt;i class="icon bars"&gt;&lt;/i&gt;
+      &lt;div class="menu"&gt;
+        &lt;% if (user) { %&gt;
+          &lt;a class="item" href="/posts?author=&lt;%= user._id %&gt;"&gt;个人主页&lt;/a&gt;
+          &lt;div class="divider"&gt;&lt;/div&gt;
+          &lt;a class="item" href="/posts/create"&gt;发表文章&lt;/a&gt;
+          &lt;a class="item" href="/signout"&gt;登出&lt;/a&gt;
+        &lt;% } else { %&gt;
+          &lt;a class="item" href="/signin"&gt;登录&lt;/a&gt;
+          &lt;a class="item" href="/signup"&gt;注册&lt;/a&gt;
+        &lt;% } %&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</div>
+
+<p><strong>views/components/notification.ejs</strong></p>
+
+<div class="code">&lt;div class="ui grid"&gt;
+  &lt;div class="four wide column"&gt;&lt;/div&gt;
+  &lt;div class="eight wide column"&gt;
+
+  &lt;% if (success) { %&gt;
+    &lt;div class="ui success message"&gt;
+      &lt;p&gt;&lt;%= success %&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;% } %&gt;
+
+  &lt;% if (error) { %&gt;
+    &lt;div class="ui error message"&gt;
+      &lt;p&gt;&lt;%= error %&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;% } %&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+</div>
+
+<h2><a id="user-content-452-applocals-和-reslocals" class="anchor" href="#452-applocals-和-reslocals" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.5.2 app.locals 和 res.locals</h2>
+
+<p>上面的模板中我们用到了 blog、user、success、error 变量，我们将 blog 变量挂载到 <div class="code">app.locals</div> 下，将 user、success、error 挂载到 <div class="code">res.locals</div> 下。为什么要这么做呢？<div class="code">app.locals</div> 和 <div class="code">res.locals</div> 是什么？它们有什么区别？</p>
+
+<p>express 中有两个对象可用于模板的渲染：<div class="code">app.locals</div> 和 <div class="code">res.locals</div>。我们从 express 源码一探究竟：</p>
+
+<p><strong>express/lib/application.js</strong></p>
+
+<div class="code">app.render = function render(name, options, callback) {
+  ...
+  var opts = options;
+  var renderOptions = {};
+  ...
+  // merge app.locals
+  merge(renderOptions, this.locals);
+
+  // merge options._locals
+  if (opts._locals) {
+    merge(renderOptions, opts._locals);
+  }
+
+  // merge options
+  merge(renderOptions, opts);
+  ...
+  tryRender(view, renderOptions, done);
+};
+</div>
+
+<p><strong>express/lib/response.js</strong></p>
+
+<div class="code">res.render = function render(view, options, callback) {
+  var app = this.req.app;
+  var opts = options || {};
+  ...
+  // merge res.locals
+  opts._locals = self.locals;
+  ...
+  // render
+  app.render(view, opts, done);
+};
+</div>
+
+<p>可以看出：在调用 <div class="code">res.render</div> 的时候，express 合并（merge）了 3 处的结果后传入要渲染的模板，优先级：<div class="code">res.render</div> 传入的对象&gt; <div class="code">res.locals</div> 对象 &gt; <div class="code">app.locals</div> 对象，所以 <div class="code">app.locals</div> 和 <div class="code">res.locals</div> 几乎没有区别，都用来渲染模板，使用上的区别在于：<div class="code">app.locals</div> 上通常挂载常量信息（如博客名、描述、作者信息），<div class="code">res.locals</div> 上通常挂载变量信息，即每次请求可能的值都不一样（如请求者信息，<div class="code">res.locals.user = req.session.user</div>）。</p>
+
+<p>修改 index.js，在 <div class="code">routes(app);</div> 上一行添加如下代码：</p>
+
+<div class="code">// 设置模板全局常量
+app.locals.blog = {
+  title: pkg.name,
+  description: pkg.description
+};
+
+// 添加模板必需的三个变量
+app.use(function (req, res, next) {
+  res.locals.user = req.session.user;
+  res.locals.success = req.flash('success').toString();
+  res.locals.error = req.flash('error').toString();
+  next();
+});
+</div>
+
+<p>这样在调用 <div class="code">res.render</div> 的时候就不用传入这四个变量了，express 为我们自动 merge 并传入了模板，所以我们可以在模板中直接使用这四个变量。</p>
+
+<p>上一节：<a href="./44">4.4 功能设计</a></p>
+
+<p>下一节：<a href="./46">4.6 连接数据库</a></p>
+<%- include('../footer') %>

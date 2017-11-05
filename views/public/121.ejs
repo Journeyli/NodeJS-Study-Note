@@ -1,0 +1,62 @@
+﻿<%- include('../header') %>
+        </br></br>
+    <div class="title">
+    <H1>—李の勉強NOTE</H1>
+    </div>
+    <div class="main">
+    <H2>1.2 MongoDB 的安装与使用</H2>
+    </div>
+    <div class="to">
+    </br>
+    </div>
+    <div class="text_eg">
+  <div class="four wide column"></div>
+  <div class="eight wide column">
+<h2><a id="user-content-121-安装与启动-mongodb" class="anchor" href="#121-安装与启动-mongodb" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.2.1 安装与启动 MongoDB</h2>
+
+<ul>
+<li>Windows 用户向导：<a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/">https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/</a></li>
+<li>Linux 用户向导：<a href="https://docs.mongodb.com/manual/administration/install-on-linux/">https://docs.mongodb.com/manual/administration/install-on-linux/</a></li>
+<li>Mac 用户向导：<a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/">https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/</a></li>
+</ul>
+
+<h2><a id="user-content-122-robomongo-和-mongochef" class="anchor" href="#122-robomongo-和-mongochef" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.2.2 Robomongo 和 Mongochef</h2>
+
+<h4><a id="user-content-robomongo" class="anchor" href="#robomongo" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Robomongo</h4>
+
+<p><a href="https://robomongo.org/">Robomongo</a> 是一个基于 Shell 的跨平台开源 MongoDB 可视化管理工具，支持 Windows、Linux 和 Mac，嵌入了 JavaScript 引擎和 MongoDB mongo，只要你会使用 mongo shell，你就会使用 Robomongo，它还提了供语法高亮、自动补全、差别视图等。</p>
+
+<p><a href="https://robomongo.org/download">Robomongo 下载地址</a></p>
+
+<p>下载并安装成功后点击左上角的 「Create」 创建一个连接，给该连接起个名字如: 「localhost」，使用默认地址（localhost）和端口（27017）即可，点击 「Save」 保存。</p>
+
+<p><a href="/img/book/1.2.1.png" target="_blank"><img src="/img/book/1.2.1.png" alt="" style="max-width:100%;"></a></p>
+
+<p>双击 「localhost」 连接到 MongoDB 并进入交互界面，尝试插入一条数据并查询出来，如下所示:</p>
+
+<p><a href="/img/book/1.2.2.png" target="_blank"><img src="/img/book/1.2.2.png" alt="" style="max-width:100%;"></a></p>
+
+<h4><a id="user-content-mongochef" class="anchor" href="#mongochef" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>MongoChef</h4>
+
+<p><a href="http://3t.io/mongochef/">MongoChef</a> 是另一款强大的 MongoDB 可视化管理工具，支持 Windows、Linux 和 Mac。</p>
+
+<p><a href="http://3t.io/mongochef/#mongochef-download-compare">MongoChef 下载地址</a>，我们选择左侧的非商业用途的免费版下载。</p>
+
+<p><a href="/img/book/1.2.3.png" target="_blank"><img src="/img/book/1.2.3.png" alt="" style="max-width:100%;"></a></p>
+
+<p>安装成功后跟 Robomongo 一样，也需要创建一个新的连接的配置，成功后双击进入到 MongoChef 主页面，如下所示:</p>
+
+<p><a href="/img/book/1.2.4.png" target="_blank"><img src="/img/book/1.2.4.png" alt="" style="max-width:100%;"></a></p>
+
+<p>还可以使用 shell 模式:</p>
+
+<p><a href="/img/book/1.2.5.png" target="_blank"><img src="/img/book/1.2.5.png" alt="" style="max-width:100%;"></a></p>
+
+<blockquote>
+<p>小提示: MongoChef 相较于 Robomongo 更强大一些，但 Robomongo 比较轻量也能满足大部分的常规需求，所以哪一个适合自己还需读者自行尝试。</p>
+</blockquote>
+
+<p>上一节：<a href="./111">1.1 Node.js 的安装与使用</a></p>
+
+<p>下一节：<a href="./21">2.1 require</a></p>
+<%- include('../footer') %>

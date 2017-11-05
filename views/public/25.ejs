@@ -1,0 +1,40 @@
+﻿<%- include('../header') %>
+        </br></br>
+    <div class="title">
+    <H1>—李の勉強NOTE</H1>
+    </div>
+    <div class="main">
+    <H2>2.5 package.json</H2>
+    </div>
+    <div class="to">
+    </br>
+    </div>
+    <div class="text_eg">
+  <div class="four wide column"></div>
+  <div class="eight wide column">
+<p>package.json 对于 Node.js 应用来说是一个不可或缺的文件，它存储了该 Node.js 应用的名字、版本、描述、作者、入口文件、脚本、版权等等信息。npm 官网有 package.json 每个字段的详细介绍：<a href="https://docs.npmjs.com/files/package.json">https://docs.npmjs.com/files/package.json</a>。</p>
+
+<h2><a id="user-content-251-semver" class="anchor" href="#251-semver" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.5.1 semver</h2>
+
+<p>语义化版本（semver）即 dependencies、devDependencies 和 peerDependencies 里的如：<code>"co": "^4.6.0"</code>。</p>
+
+<p>semver 格式：<code>主版本号.次版本号.修订号</code>。版本号递增规则如下：</p>
+
+<ul>
+<li><code>主版本号</code>：做了不兼容的 API 修改</li>
+<li><code>次版本号</code>：做了向下兼容的功能性新增</li>
+<li><code>修订号</code>：做了向下兼容的 bug 修正</li>
+</ul>
+
+<p>更多阅读：</p>
+
+<ol>
+<li><a href="http://semver.org/lang/zh-CN/">http://semver.org/lang/zh-CN/</a></li>
+<li><a href="http://taobaofed.org/blog/2016/08/04/instructions-of-semver/">http://taobaofed.org/blog/2016/08/04/instructions-of-semver/</a></li>
+</ol>
+
+<p>作为 Node.js 的开发者，我们在发布 npm 模块的时候一定要遵守语义化版本的命名规则，即：有 breaking change 发大版本，有新增的功能发小版本，有小的 bug 修复或优化则发修订版本。</p>
+<p>上一节：<a href="./24">2.4 环境变量</a></p>
+
+<p>下一节：<a href="./26">2.6 npm 使用注意事项</a></p>
+<%- include('../footer') %>

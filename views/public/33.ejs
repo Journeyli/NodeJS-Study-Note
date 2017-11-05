@@ -1,0 +1,166 @@
+﻿<%- include('../header') %>
+        </br></br>
+    <div class="title">
+    <H1>—李の勉強NOTE</H1>
+    </div>
+    <div class="main">
+    <H2>3.3 模板引擎</H2>
+    </div>
+    <div class="to">
+    </br>
+    </div>
+    <div class="text_eg">
+  <div class="four wide column"></div>
+  <div class="eight wide column">
+<p>模板引擎（Template Engine）是一个将页面模板和数据结合起来生成 html 的工具。上例中，我们只是返回纯文本给浏览器，现在我们修改代码返回一个 html 页面给浏览器。</p>
+
+<h2><a id="user-content-331-ejs" class="anchor" href="#331-ejs" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.3.1 ejs</h2>
+
+<p>模板引擎有很多，<a href="https://www.npmjs.com/package/ejs">ejs</a> 是其中一种，因为它使用起来十分简单，而且与 express 集成良好，所以我们使用 ejs。安装 ejs：</p>
+
+<div class="code">npm i ejs --save
+</div>
+
+<p>修改 index.js 如下：</p>
+
+<p><strong>index.js</strong></p>
+
+<div class="code">var path = require('path');<br />
+var express = require('express');<br />
+var app = express();<br />
+var indexRouter = require('./routes/index');<br />
+var userRouter = require('./routes/users');<br />
+<br />
+app.set('views', path.join(__dirname, 'views'));// 设置存放模板文件的目录<br />
+app.set('view engine', 'ejs');// 设置模板引擎为 ejs<br />
+<br />
+app.use('/', indexRouter);<br />
+app.use('/users', userRouter);<br />
+<br />
+app.listen(3000);<br />
+</div>
+
+<p>通过 <div class="code">app.set</div> 设置模板引擎为 ejs 和存放模板的目录。在 myblog 下新建 views 文件夹，在 views 下新建 users.ejs，添加如下代码：</p>
+
+<p><strong>views/users.ejs</strong></p>
+
+<div class="code">&lt;!DOCTYPE html&gt;<br />
+&lt;html&gt;<br />
+  &lt;head&gt;<br />
+    &lt;style type="text/css"&gt;<br />
+      body {padding: 50px;font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;}<br />
+    &lt;/style&gt;<br />
+  &lt;/head&gt;<br />
+  &lt;body&gt;<br />
+    &lt;h1&gt;&lt;%= name.toUpperCase() %&gt;&lt;/h1&gt;<br />
+    &lt;p&gt;hello, &lt;%= name %&gt;&lt;/p&gt;<br />
+  &lt;/body&gt;<br />
+&lt;/html&gt;
+</div>
+
+<p>修改 routes/users.js 如下：</p>
+
+<p><strong>routes/users.js</strong></p>
+
+<div class="code">var express = require('express');<br />
+var router = express.Router();<br />
+<br />
+router.get('/:name', function(req, res) {<br />
+  res.render('users', {<br />
+    name: req.params.name<br />
+  });<br />
+});<br />
+<br />
+module.exports = router;
+</div>
+
+<p>通过调用 <div class="code">res.render</div> 函数渲染 ejs 模板，res.render 第一个参数是模板的名字，这里是 users 则会匹配 views/users.ejs，第二个参数是传给模板的数据，这里传入 name，则在 ejs 模板中可使用 name。<div class="code">res.render</div> 的作用就是将模板和数据结合生成 html，同时设置响应头中的 <div class="code">Content-Type: text/html</div>，告诉浏览器我返回的是 html，不是纯文本，要按 html 展示。现在我们访问 <div class="code">localhost:3000/users/haha</div>，如下图所示：</p>
+
+<p><a href="/img/book/3.3.1.png" target="_blank"><img src="/img/book/3.3.1.png" alt="" style="max-width:100%;"></a></p>
+
+<p>上面代码可以看到，我们在模板 <div class="code">&lt;%= name.toUpperCase() %&gt;</div> 中使用了 JavaScript 的语法 <div class="code">.toUpperCase()</div> 将名字转化为大写，那这个 <div class="code">&lt;%= xxx %&gt;</div> 是什么东西呢？ejs 有 3 种常用标签：</p>
+
+<ol>
+<li><div class="code">&lt;% code %&gt;</div>：运行 JavaScript 代码，不输出</li>
+<li><div class="code">&lt;%= code %&gt;</div>：显示转义后的 HTML内容</li>
+<li><div class="code">&lt;%- code %&gt;</div>：显示原始 HTML 内容</li>
+</ol>
+
+<blockquote>
+<p>注意：<div class="code">&lt;%= code %&gt;</div> 和 <div class="code">&lt;%- code %&gt;</div> 都可以是 JavaScript 表达式生成的字符串，当变量 code 为普通字符串时，两者没有区别。当 code 比如为 <div class="code">&lt;h1&gt;hello&lt;/h1&gt;</div> 这种字符串时，<div class="code">&lt;%= code %&gt;</div> 会原样输出 <div class="code">&lt;h1&gt;hello&lt;/h1&gt;</div>，而 <div class="code">&lt;%- code %&gt;</div> 则会显示 H1 大的 hello 字符串。</p>
+</blockquote>
+
+<p>下面的例子解释了 <div class="code">&lt;% code %&gt;</div> 的用法：</p>
+
+<p><strong>Data</strong></p>
+
+<div class="code">supplies: ['mop', 'broom', 'duster']
+</div>
+
+<p><strong>Template</strong></p>
+
+<div class="code">&lt;ul&gt;<br />
+&lt;% for(var i=0; i&lt;supplies.length; i++) {%&gt;<br />
+   &lt;li&gt;&lt;%= supplies[i] %&gt;&lt;/li&gt;<br />
+&lt;% } %&gt;<br />
+&lt;/ul&gt;<br />
+</div>
+
+<p><strong>Result</strong></p>
+
+<div class="code">&lt;ul&gt;<br />
+  &lt;li&gt;mop&lt;/li&gt;<br />
+  &lt;li&gt;broom&lt;/li&gt;<br />
+  &lt;li&gt;duster&lt;/li&gt;<br />
+&lt;/ul&gt;
+</div>
+
+<p>更多 ejs 的标签请看 <a href="https://www.npmjs.com/package/ejs#tags">官方文档</a>。</p>
+
+<h2><a id="user-content-332-includes" class="anchor" href="#332-includes" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.3.2 includes</h2>
+
+<p>我们使用模板引擎通常不是一个页面对应一个模板，这样就失去了模板的优势，而是把模板拆成可复用的模板片段组合使用，如在 views 下新建 header.ejs 和 footer.ejs，并修改 users.ejs：</p>
+
+<p><strong>views/header.ejs</strong></p>
+
+<div class="code">&lt;!DOCTYPE html&gt;<br />
+&lt;html&gt;<br />
+  &lt;head&gt;<br />
+    &lt;style type="text/css"&gt;<br />
+      body {padding: 50px;font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;}<br />
+    &lt;/style&gt;<br />
+  &lt;/head&gt;<br />
+  &lt;body&gt;
+</div>
+
+<p><strong>views/footer.ejs</strong></p>
+
+<div class="code">  &lt;/body&gt;<br />
+&lt;/html&gt;
+</div>
+
+<p><strong>views/users.ejs</strong></p>
+
+<div class="code">&lt;%- include('header') %&gt;<br />
+  &lt;h1&gt;&lt;%= name.toUpperCase() %&gt;&lt;/h1&gt;<br />
+  &lt;p&gt;hello, &lt;%= name %&gt;&lt;/p&gt;<br />
+&lt;%- include('footer') %&gt;
+</div>
+
+<p>我们将原来的 users.ejs 拆成出了 header.ejs 和 footer.ejs，并在 users.ejs 通过 ejs 内置的 include 方法引入，从而实现了跟以前一个模板文件相同的功能。</p>
+
+<blockquote>
+<p>小提示：拆分模板组件通常有两个好处：</p>
+
+<ol>
+<li>模板可复用，减少重复代码</li>
+<li>主模板结构清晰</li>
+</ol>
+
+<p>注意：要用 <div class="code">&lt;%- include('header') %&gt;</div> 而不是 <div class="code">&lt;%= include('header') %&gt;</div></p>
+</blockquote>
+<%- include('../footer') %>
+<p>上一节：<a href="./32">3.2 路由</a></p>
+
+<p>下一节：<a href="./34">3.4 Express 浅析</a></p>
+<%- include('../footer') %>

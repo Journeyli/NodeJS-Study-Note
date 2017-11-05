@@ -1,0 +1,62 @@
+﻿<%- include('../header') %>
+        </br></br>
+    <div class="title">
+    <H1>—李の勉強NOTE</H1>
+    </div>
+    <div class="main">
+    <H2>1.2 The install and use of MongoDB</H2>
+    </div>
+    <div class="to">
+    </br>
+    </div>
+    <div class="text_eg">
+  <div class="four wide column"></div>
+  <div class="eight wide column">
+	<h2><a id="user-content-121-install and use-mongodb" class="anchor" href="#121-install and use-mongodb" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.21" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.2.1 The install and use of MongoDB</h2>
+
+	<ul>
+	<li>Windows User Guide：<a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/">https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/</a></li>
+	<li>Linux User Guide：<a href="https://docs.mongodb.com/manual/administration/install-on-linux/">https://docs.mongodb.com/manual/administration/install-on-linux/</a></li>
+	<li>Mac User Guide：<a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/">https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/</a></li>
+	</ul>
+
+	<h2><a id="user-content-122-robomongo-and-mongochef" class="anchor" href="#122-robomongo-and-mongochef" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.22" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.2.2 Robomongo and Mongochef</h2>
+
+	<h4><a id="user-content-robomongo" class="anchor" href="#robomongo" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Robomongo</h4>
+
+	<p><a href="https://robomongo.org/">Robomongo</a> is a tool for MongoDB visible management based on shell with cross-platform open source,support Windows、Linux and Mac，Embedded JavaScript engine and MongoDB mongo，as long as you can use Mongo shell, you can use Robomongo，It also provide syntax highlighting, auto completion, difference view etc.</p>
+
+	<p><a href="https://robomongo.org/download">Robomongo download address</a></p>
+
+	<p>After downloading and installing, click 「Create」on the upper left corner, create a link and name it like: 「localhost」，just use default address（localhost）and port（27017）, then click 「Save」.</p>
+
+	<p><a href="/img/book/1.2.1.png" target="_blank"><img src="/img/book/1.2.1.png" alt="" style="max-width:100%;"></a></p>
+
+	<p>Double-click 「localhost」 to link to MongoDB and enter the interactive interface, Try to insert a data and query it as follows:</p>
+
+	<p><a href="/img/book/1.2.2.png" target="_blank"><img src="/img/book/1.2.2.png" alt="" style="max-width:100%;"></a></p>
+
+	<h4><a id="user-content-mongochef" class="anchor" href="#mongochef" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>MongoChef</h4>
+
+	<p><a href="http://3t.io/mongochef/">MongoChef</a> is another powerful MongoDB visible management tool, support Windows、Linux and Mac。</p>
+
+	<p><a href="http://3t.io/mongochef/#mongochef-download-compare">MongoChef download address</a>，we chose the left one of the non-commercial use of free download.</p>
+
+	<p><a href="/img/book/1.2.3.png" target="_blank"><img src="/img/book/1.2.3.png" alt="" style="max-width:100%;"></a></p>
+
+	<p>Just like Robomongo, you'll also need to create a new connection configuration, double-click on the MongoChef home page after successful, as shown below:</p>
+
+	<p><a href="/img/book/1.2.4.png" target="_blank"><img src="/img/book/1.2.4.png" alt="" style="max-width:100%;"></a></p>
+
+	<p>You can also use the shell mode:</p>
+
+	<p><a href="/img/book/1.2.5.png" target="_blank"><img src="/img/book/1.2.5.png" alt="" style="max-width:100%;"></a></p>
+
+	<blockquote>
+	<p>Tips: MongoChef is a bit more powerful than Robomongo, but the Robomongo lightweight can also meet most of the conventional needs, so which one is suitable needs the reader to try by themselves.	</p>
+	</blockquote>
+
+	<p>Previous section:<a href="./111_eg">1.1 Installation guide</a></p>
+
+	<p>Next section:<a href="./21_eg">2.1 require</a></p>
+<%- include('../footer') %>

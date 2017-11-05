@@ -1,0 +1,343 @@
+﻿<%- include('../header') %>
+        </br></br>
+    <div class="title">
+    <H1>—李の勉強NOTE</H1>
+    </div>
+    <div class="main">
+    <H2>1.2 MongoDB 的安装与使用</H2>
+    </div>
+    <div class="to">
+    </br>
+    </div>
+    <div class="text_eg">
+  <div class="four wide column"></div>
+  <div class="eight wide column">
+<h2><a id="user-content-441-功能与路由设计" class="anchor" href="#441-功能与路由设计" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.4.1 功能与路由设计</h2>
+
+<p>在开发网站之前，我们首先需要明确网站要实现哪些功能。由于本教程面向初学者，所以只实现了网站最基本的功能，其余的功能（如归档、标签、分页等等）读者可自行实现。</p>
+
+<p>功能及路由设计如下：</p>
+
+<ol>
+<li>注册
+
+<ol>
+<li>注册页：<div class="code">GET /signup</div></li>
+<li>注册（包含上传头像）：<div class="code">POST /signup</div></li>
+</ol></li>
+<li>登录
+
+<ol>
+<li>登录页：<div class="code">GET /signin</div></li>
+<li>登录：<div class="code">POST /signin</div></li>
+</ol></li>
+<li>登出：<div class="code">GET /signout</div></li>
+<li>主页/目录页：<div class="code">GET /main</div></li>
+
+<li>各子页：<div class="code">GET /public</div>
+<ol>
+<li>1.1 インストールNode.js：<div class="code">GET /public/111</div></li>
+<li>1.2 インストールと起動MongoDB：<div class="code">GET /public/121</div></li>
+<li>2.1 requireの使用：<div class="code">GET /public/21</div></li>
+<li>2.2 exports 和 module.exports：<div class="code">GET /public/22</div></li>
+<li>2.3 Promise：<div class="code">GET /public/23</div></li>
+<li>2.4 环境变量：<div class="code">GET /public/24</div></li>
+<li>2.5 package.json：<div class="code">GET /public/25</div></li>
+<li>2.6 npm 使用注意事项：<div class="code">GET /public/26</div></li>
+<li>3.1 初始化一个 Express 项目：<div class="code">GET /public/31</div></li>
+<li>3.2 路由：<div class="code">GET /public/32</div></li>
+<li>3.3 模板引擎：<div class="code">GET /public/33</div></li>
+<li>3.4 Express 浅析：<div class="code">GET /public/34</div></li>
+<li>4.1 开发环境：<div class="code">GET /public/41</div></li>
+<li>4.2 准备工作：<div class="code">GET /public/42</div></li>
+<li>4.3 配置文件：<div class="code">GET /public/43</div></li>
+<li>4.4 功能设计：<div class="code">GET /public/44</div></li>
+<li>4.5 页面设计：<div class="code">GET /public/45</div></li>
+<li>4.6 连接数据库：<div class="code">GET /public/46</div></li>
+<li>4.7 注册：<div class="code">GET /public/47</div></li>
+<li>4.8 登出与登录：<div class="code">GET /public/48</div></li>
+</ol></li>
+
+</ol>
+
+<p>由于我们网站页面是后端渲染的，所以只通过简单的 <div class="code">&lt;a&gt;(GET)</div> 和 <div class="code">&lt;form&gt;(POST)</div> 与后端进行交互，如果使用 jQuery 或者其他前端框架（如 angular、vue、react 等等）可通过 Ajax 与后端交互，则 api 的设计应尽量遵循 restful 风格。</p>
+
+<h4><a id="user-content-restful" class="anchor" href="#restful" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>restful</h4>
+
+<p>restful 是一种 api 的设计风格，提出了一组 api 的设计原则和约束条件。</p>
+
+<p>可以看出，restful 风格的 api 更直观且优雅。</p>
+
+<p>更多阅读：</p>
+
+<ol>
+<li><a href="http://www.ruanyifeng.com/blog/2011/09/restful">http://www.ruanyifeng.com/blog/2011/09/restful</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">http://www.ruanyifeng.com/blog/2014/05/restful_api.html</a></li>
+<li><a href="http://developer.51cto.com/art/200908/141825.htm">http://developer.51cto.com/art/200908/141825.htm</a></li>
+<li><a href="http://blog.jobbole.com/41233/">http://blog.jobbole.com/41233/</a></li>
+</ol>
+
+<h2><a id="user-content-442-会话" class="anchor" href="#442-会话" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.4.2 会话</h2>
+
+<p>由于 HTTP 协议是无状态的协议，所以服务端需要记录用户的状态时，就需要用某种机制来识别具体的用户，这个机制就是会话（Session）。关于 Session 的讲解网上有许多资料，这里不再赘述。参考：</p>
+
+<ol>
+<li><a href="http://justsee.iteye.com/blog/1570652">http://justsee.iteye.com/blog/1570652</a></li>
+<li><a href="https://www.zhihu.com/question/19786827">https://www.zhihu.com/question/19786827</a></li>
+</ol>
+
+<h4><a id="user-content-cookie-与-session-的区别" class="anchor" href="#cookie-与-session-的区别" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cookie 与 session 的区别</h4>
+
+<ol>
+<li>cookie 存储在浏览器（有大小限制），session 存储在服务端（没有大小限制）</li>
+<li>通常 session 的实现是基于 cookie 的，即 session id 存储于 cookie 中</li>
+</ol>
+
+<p>我们通过引入 express-session 中间件实现对会话的支持：</p>
+
+<div class="code">app.use(session(options))
+</div>
+
+<p>session 中间件会在 req 上添加 session 对象，即 req.session 初始值为 <div class="code">{}</div>，当我们登录后设置 <div class="code">req.session.user = 用户信息</div>，返回浏览器的头信息中会带上 <div class="code">set-cookie</div> 将 session id 写到浏览器 cookie 中，那么该用户下次请求时，通过带上来的 cookie 中的 session id 我们就可以查找到该用户，并将用户信息保存到 <div class="code">req.session.user</div>。</p>
+
+<h2><a id="user-content-443-页面通知" class="anchor" href="#443-页面通知" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.4.3 页面通知</h2>
+
+<p>我们还需要这样一个功能：当我们操作成功时需要显示一个成功的通知，如登录成功跳转到主页时，需要显示一个 <div class="code">登陆成功</div> 的通知；当我们操作失败时需要显示一个失败的通知，如注册时用户名被占用了，需要显示一个 <div class="code">用户名已占用</div> 的通知。通知只显示一次，刷新后消失，我们可以通过 connect-flash 中间件实现这个功能。</p>
+
+<p><a href="https://www.npmjs.com/package/connect-flash">connect-flash</a> 是基于 session 实现的，它的原理很简单：设置初始值 <div class="code">req.session.flash={}</div>，通过 <div class="code">req.flash(name, value)</div> 设置这个对象下的字段和值，通过 <div class="code">req.flash(name)</div> 获取这个对象下的值，同时删除这个字段。</p>
+
+<h4><a id="user-content-express-sessionconnect-mongo-和-connect-flash-的区别与联系" class="anchor" href="#express-sessionconnect-mongo-和-connect-flash-的区别与联系" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>express-session、connect-mongo 和 connect-flash 的区别与联系</h4>
+
+<ol>
+<li><div class="code">express-session</div>: 会话（session）支持中间件</li>
+<li><div class="code">connect-mongo</div>: 将 session 存储于 mongodb，需结合 express-session 使用，我们也可以将 session 存储于 redis，如 <a href="https://www.npmjs.com/package/connect-redis">connect-redis</a></li>
+<li><div class="code">connect-flash</div>: 基于 session 实现的用于通知功能的中间件，需结合 express-session 使用</li>
+</ol>
+
+<h2><a id="user-content-444-权限控制" class="anchor" href="#444-权限控制" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.4.4 权限控制</h2>
+
+<p>本网站没有登录的话只能浏览1.1,1.2，登陆后才能浏览其他页面，如何实现页面的权限控制呢？我们可以把用户状态的检查封装成一个中间件，在每个需要权限控制的路由加载该中间件，即可实现页面的权限控制。在 myblog 下新建 middlewares 文件夹，在该目录下新建 check.js，添加如下代码：</p>
+
+<p><strong>middlewares/check.js</strong></p>
+
+<div class="code">module.exports = {<br />
+  checkLogin: function checkLogin(req, res, next) {<br />
+    if (!req.session.user) {<br />
+      req.flash('error', '未登录'); <br />
+      return res.redirect('/signin');<br />
+    }<br />
+    next();<br />
+  },<br />
+<br />
+  checkNotLogin: function checkNotLogin(req, res, next) {<br />
+    if (req.session.user) {<br />
+      req.flash('error', '已登录'); <br />
+      return res.redirect('back');//返回之前的页面<br />
+    }<br />
+    next();<br />
+  }<br />
+};
+</div>
+
+<p>可以看出：</p>
+
+<ol>
+<li><div class="code">checkLogin</div>: 当用户信息（<div class="code">req.session.user</div>）不存在，即认为用户没有登录，则跳转到登录页，同时显示 <div class="code">未登录</div> 的通知，用于需要用户登录才能操作的页面及接口</li>
+<li><div class="code">checkNotLogin</div>: 当用户信息（<div class="code">req.session.user</div>）存在，即认为用户已经登录，则跳转到之前的页面，同时显示 <div class="code">已登录</div> 的通知，如登录、注册页面及登录、注册的接口</li>
+</ol>
+
+<p>最终我们创建以下路由文件：</p>
+
+<p><strong>routes/index.js</strong></p>
+
+<div class="code">module.exports = function (app) {<br />
+  app.get('/', function (req, res) {<br />
+    res.redirect('/main');<br />
+  });
+  app.use('/signup', require('./signup'));<br />
+  app.use('/signin', require('./signin'));<br />
+  app.use('/signout', require('./signout'));<br />
+  app.use('/main', require('./main'));<br />
+  app.use('/public', require('./public'));<br />
+};
+</div>
+
+<p><strong>routes/main.js</strong></p>
+
+<div class="code">var express = require('express');<br />
+var router = express.Router();<br />
+<br />
+var checkLogin = require('../middlewares/check').checkLogin;<br />
+<br />
+// GET /main 进入主页面<br />
+//   eg: GET /main?author=xxx<br />
+router.get('/', function(req, res, next) {<br />
+  res.render('main');<br />
+});<br />
+<br />
+module.exports = router;
+</div>
+
+<p><strong>routes/signin.js</strong></p>
+
+<div class="code">var sha1 = require('sha1');<br />
+var express = require('express');<br />
+var router = express.Router();<br />
+<br />
+var UserModel = require('../models/users');<br />
+var checkNotLogin = require('../middlewares/check').checkNotLogin;<br />
+<br />
+// GET /signin 登录页<br />
+router.get('/', checkNotLogin, function(req, res, next) {<br />
+  res.render('signin');<br />
+});<br />
+<br />
+// POST /signin 用户登录<br />
+router.post('/', checkNotLogin, function(req, res, next) {<br />
+  var name = req.fields.name;<br />
+  var password = req.fields.password;<br />
+<br />
+  UserModel.getUserByName(name)<br />
+    .then(function (user) {<br />
+      if (!user) {<br />
+        req.flash('error', '用户不存在');<br />
+        return res.redirect('back');<br />
+      }<br />
+      // 检查密码是否匹配<br />
+      if (sha1(password) !== user.password) {<br />
+        req.flash('error', '用户名或密码错误');<br />
+        return res.redirect('back');<br />
+      }<br />
+      req.flash('success', '登录成功');<br />
+      // 用户信息写入 session<br />
+      delete user.password;<br />
+      req.session.user = user;<br />
+      // 跳转到主页<br />
+      res.redirect('/main');<br />
+    })<br />
+    .catch(next);<br />
+});<br />
+<br />
+module.exports = router;
+</div>
+
+<p><strong>routes/signup.js</strong></p><br />
+
+<div class="code">var express = require('express');<br />
+var router = express.Router();<br />
+
+var checkNotLogin = require('../middlewares/check').checkNotLogin;<br />
+<br />
+// GET /signup 注册页<br />
+router.get('/', checkNotLogin, function(req, res, next) {<br />
+  res.send(req.flash());<br />
+});<br />
+<br />
+// POST /signup 用户注册<br />
+router.post('/', checkNotLogin, function(req, res, next) {<br />
+  res.send(req.flash());<br />
+});<br />
+<br />
+module.exports = router;
+</div>
+
+<p><strong>routes/signout.js</strong></p>
+
+<div class="code">var express = require('express');<br />
+var router = express.Router();<br />
+<br />
+var checkLogin = require('../middlewares/check').checkLogin;<br />
+<br />
+// GET /signout 登出<br />
+router.get('/', checkLogin, function(req, res, next) {<br />
+  // 清空 session 中用户信息<br />
+  req.session.user = null;<br />
+  req.flash('success', '登出成功');<br />
+  // 登出成功后跳转到主页<br />
+  res.redirect('/main');<br />
+});<br />
+<br />
+module.exports = router;
+</div>
+
+<p>最后， 修改 index.js 如下：</p>
+
+<p><strong>index.js</strong></p>
+
+<div class="code">var path = require('path');<br />
+var express = require('express');<br />
+var session = require('express-session');<br />
+var MongoStore = require('connect-mongo')(session);<br />
+var flash = require('connect-flash');<br />
+var config = require('config-lite');<br />
+var routes = require('./routes');<br />
+var pkg = require('./package');<br />
+<br />
+var app = express();<br />
+<br />
+// 设置模板目录<br />
+app.set('views', path.join(__dirname, 'views'));<br />
+// 设置模板引擎为 ejs<br />
+app.set('view engine', 'ejs');<br />
+<br />
+// 设置静态文件目录<br />
+app.use(express.static(path.join(__dirname, 'public')));<br />
+<br />
+// session 中间件<br />
+app.use(session({<br />
+  name: config.session.key,// 设置 cookie 中保存 session id 的字段名称<br />
+  secret: config.session.secret,// 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改<br />
+  cookie: {<br />
+    maxAge: config.session.maxAge// 过期时间，过期后 cookie 中的 session id 自动删除<br />
+  },<br />
+  store: new MongoStore({// 将 session 存储到 mongodb<br />
+    url: config.mongodb// mongodb 地址<br />
+  })<br />
+}));<br />
+// flash 中间价，用来显示通知<br />
+app.use(flash());<br />
+<br />
+// 处理表单及文件上传的中间件<br />
+app.use(require('express-formidable')({<br />
+  uploadDir: path.join(__dirname, 'public/img'),// 上传文件目录<br />
+  keepExtensions: true// 保留后缀<br />
+}));<br />
+<br />
+// 设置模板全局常量<br />
+app.locals.blog = {<br />
+  title: pkg.name,<br />
+  description: pkg.description<br />
+};<br />
+<br />
+// 添加模板必需的三个变量<br />
+app.use(function (req, res, next) {<br />
+  res.locals.user = req.session.user;<br />
+  res.locals.success = req.flash('success').toString();<br />
+  res.locals.error = req.flash('error').toString();<br />
+  next();<br />
+});<br />
+// 路由<br />
+routes(app);<br />
+<br />
+// 监听端口，启动程序<br />
+app.listen(config.port, function () {<br />
+  console.log('${pkg.name} listening on port ${config.port}');<br />
+});
+</div>
+
+<blockquote>
+<p>注意：中间件的加载顺序很重要。如上面设置静态文件目录的中间件应该放到 routes(app) 之前加载，这样静态文件的请求就不会落到业务逻辑的路由里；flash 中间件应该放到 session 中间件之后加载，因为 flash 是基于 session 的。</p>
+</blockquote>
+
+<p>运行 <div class="code">supervisor --harmony index</div> 启动网站，访问以下地址查看效果：</p>
+
+<ol>
+<li>http://localhost:3000/main</li>
+<li>http://localhost:3000/signout</li>
+<li>http://localhost:3000/signup</li>
+</ol>
+
+<p>上一节：<a href="./43">4.3 配置文件</a></p>
+
+<p>下一节：<a href="./45">4.5 页面设计</a></p>
+<%- include('../footer') %>
